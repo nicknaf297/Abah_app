@@ -20,9 +20,8 @@ class EBT {
     this.eqd2Value = 0.0
   });
 
-  void calculateValues() {
-    //double aOverBRatio = ref.watch(aOverBRatioProvider);
-    //bedValue = fraction * dosePerFraction * (1 + dosePerFraction / aOverBRatio);
-    //eqd2Value = bedValue / (1 + 2 / aOverBRatio);
+  void calculateValues(double aOverBRatio) {
+    bedValue = fraction * dosePerFraction * (1 + dosePerFraction / aOverBRatio);
+    eqd2Value = bedValue / (1 + 2 / aOverBRatio);
   }
 }
