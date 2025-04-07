@@ -1,0 +1,57 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1543572403214441030",
+      "lastPropertyId": "6:3544159127052456062",
+      "name": "EBT",
+      "properties": [
+        {
+          "id": "1:454382992019635814",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8788927444672195486",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:2948420963988613879",
+          "name": "fraction",
+          "type": 8
+        },
+        {
+          "id": "4:5457758441566327167",
+          "name": "dosePerFraction",
+          "type": 8
+        },
+        {
+          "id": "5:3962348039644537347",
+          "name": "bedValue",
+          "type": 8
+        },
+        {
+          "id": "6:3544159127052456062",
+          "name": "eqd2Value",
+          "type": 8
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:1543572403214441030",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

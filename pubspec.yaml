@@ -1,0 +1,38 @@
+name: abah_app
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  objectbox: ^4.1.0
+  objectbox_flutter_libs: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.15
+  objectbox_generator: any
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: SourceSans3
+      fonts:
+        - asset: fonts/SourceSans3-Regular.ttf
+        - asset: fonts/SourceSans3-Bold.ttf
+          weight: 700
