@@ -24,4 +24,6 @@ class ObjectBox {
   int insertEBT(EBT ebt) => _ebtBox.put(ebt);
 
   bool deleteEBT(int id) => _ebtBox.remove(id);
+
+  List<int> getEBTIds() => _ebtBox.query().build().findIds();
 }
