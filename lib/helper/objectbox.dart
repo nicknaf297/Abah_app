@@ -1,5 +1,6 @@
 import 'package:abah_app/model/ebt.dart';
 import 'package:abah_app/objectbox.g.dart';
+import 'package:flutter/material.dart';
 
 class ObjectBox {
   late final Store _store;       //Contain actual database
@@ -16,6 +17,7 @@ class ObjectBox {
 
   EBT? getEBT(int id) => _ebtBox.get(id);
 
+  //List out all EBTs
   Stream<List<EBT>> getEBTs() => 
   _ebtBox.query().
   watch(triggerImmediately: true).
@@ -26,4 +28,15 @@ class ObjectBox {
   bool deleteEBT(int id) => _ebtBox.remove(id);
 
   List<int> getEBTIds() => _ebtBox.query().build().findIds();
+
+  void purgeEBTs() =>_ebtBox.removeAll();
+
+  void printEBTs() {
+    final ids = _ebtBox.query().build().findIds();
+    for (var id in ids) {
+      if (getEBT(id) != null) {
+        debugPrint(getEBT(id)?.name);
+      }
+    }
+  }
 }

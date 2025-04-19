@@ -17,7 +17,7 @@ class EbtCard extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final editing = ref.watch(ebtCardEditProvider);
+    final editing = ref.watch(ebtCardEditProvider)[ebt.id] ?? false;
 
     return editing
       ? ebtCardEdit(

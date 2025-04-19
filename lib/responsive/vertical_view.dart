@@ -1,4 +1,5 @@
 import 'package:abah_app/config/theme.dart';
+import 'package:abah_app/main.dart';
 import 'package:abah_app/model/ebt.dart';
 import 'package:abah_app/objectbox.g.dart';
 import 'package:abah_app/widgets/custom_button_with_icon.dart';
@@ -12,6 +13,15 @@ class VerticalView extends StatefulWidget {
 
   @override
   State<VerticalView> createState() => _VerticalViewState();
+}
+
+void addEBT() {
+  EBT newEBT = EBT(name: "test");
+  objectBox.insertEBT(newEBT);
+}
+
+void deleteEBT(int id) {
+  objectBox.deleteEBT(id);
 }
 
 class _VerticalViewState extends State<VerticalView> {
@@ -52,11 +62,12 @@ class _VerticalViewState extends State<VerticalView> {
                   customButtonWithIcon(
                     label: "Add EBT", 
                     icon: const Icon(Icons.add), 
-                    onPressed: () {}
+                    onPressed: addEBT
                   )
                 ],
               ),
               const SizedBox(height: 12),
+              //ADD LIST HERE
               const SizedBox(height: 12),
             ],
           ),

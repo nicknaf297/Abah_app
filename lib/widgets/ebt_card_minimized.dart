@@ -38,8 +38,7 @@ Widget ebtCardMinimized ({
                 icon: const Icon(Icons.edit), 
                 color: primaryGreen,
                 onPressed: () {
-                  ref.read(ebtCardEditProvider.notifier).state = true;
-                  debugPrint("$ref.watch(ebtCardEditProvider)");
+                  ref.read(ebtCardEditProvider.notifier).set(ebt.id, true);
                 }
               )
             ],

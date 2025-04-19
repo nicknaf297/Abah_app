@@ -43,7 +43,7 @@ Widget ebtCardEdit ({
                 icon: const Icon(Icons.delete), 
                 color: red,
                 onPressed: () {
-                  ref.read(ebtCardEditProvider.notifier).state = false;
+                  ref.read(ebtCardEditProvider.notifier).set(ebt.id, false);
                 }
               ),
               const SizedBox(width: 12),
@@ -51,7 +51,7 @@ Widget ebtCardEdit ({
                 icon: const Icon(Icons.check), 
                 color: primaryGreen,
                 onPressed: () {
-                  ref.read(ebtCardEditProvider.notifier).state = false;
+                  ref.read(ebtCardEditProvider.notifier).set(ebt.id, false);
                 }
               )
             ],
