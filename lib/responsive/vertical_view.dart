@@ -1,34 +1,30 @@
 import 'package:abah_app/config/theme.dart';
 import 'package:abah_app/main.dart';
 import 'package:abah_app/model/ebt.dart';
-import 'package:abah_app/objectbox.g.dart';
+import 'package:abah_app/provider.dart';
 import 'package:abah_app/widgets/custom_button_with_icon.dart';
 import 'package:abah_app/widgets/custom_textfield.dart';
 import 'package:abah_app/widgets/ebt_card.dart';
 import 'package:abah_app/widgets/total_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VerticalView extends StatefulWidget {
+class VerticalView extends ConsumerWidget {
   const VerticalView({super.key});
 
+  Future<void> addEBT() async {
+    EBT newEBT = EBT();
+    final id = objectBox.insertEBT(newEBT);
+
+    newEBT.name = "EBT #$id";
+    objectBox.insertEBT(newEBT);
+  }
+
   @override
-  State<VerticalView> createState() => _VerticalViewState();
-}
-
-void addEBT() {
-  EBT newEBT = EBT(name: "test");
-  objectBox.insertEBT(newEBT);
-}
-
-void deleteEBT(int id) {
-  objectBox.deleteEBT(id);
-}
-
-class _VerticalViewState extends State<VerticalView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double width = MediaQuery.of(context).size.width;
-    TextEditingController ratioController = TextEditingController();
+    TextEditingController ratioController = TextEditingController(text: ref.watch(aOverBRatioProvider.notifier).state.toString());
+    final ebtListAsync = ref.watch(ebtListProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -45,7 +41,6 @@ class _VerticalViewState extends State<VerticalView> {
               customTextField(
                 label: "a/b ratio", 
                 textController: ratioController, 
-                value: 12.toString()
               ),
               const SizedBox(height: 12),
               Row(
@@ -67,8 +62,20 @@ class _VerticalViewState extends State<VerticalView> {
                 ],
               ),
               const SizedBox(height: 12),
-              //ADD LIST HERE
-              const SizedBox(height: 12),
+              ebtListAsync.when(
+                data: (ebts) => Column(
+                  children: ebts.map((ebt) => Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                    child: EbtCard(
+                      ebt: ebt, 
+                      width: width
+                      ),
+                    )
+                  ).toList()
+                ), 
+                error: (stack, e) => Center(child: Text("Error $e")), 
+                loading: () => const Center(child: CircularProgressIndicator())
+              ),
             ],
           ),
         ),

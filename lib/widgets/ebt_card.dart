@@ -20,7 +20,7 @@ class EbtCard extends ConsumerWidget{
     final editing = ref.watch(ebtCardEditProvider)[ebt.id] ?? false;
 
     return editing
-      ? ebtCardEdit(
+      ? EbtCardEdit(
         ebt: ebt,
         width: width
       )

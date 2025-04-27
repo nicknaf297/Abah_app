@@ -45,13 +45,13 @@ Widget ebtCardMinimized ({
           ),
           const SizedBox(height: 4),
           Text(
-            "Number of fraction:  $ebt.fraction",
+            "Number of fraction:  ${ebt.fraction.toStringAsFixed(2)}",
             style: customTextStyle(
               fontSize: 12
             ),
           ),
           Text(
-            "Dose per Fraction:  $ebt.dosePerFraction",
+            "Dose per Fraction:  ${ebt.dosePerFraction.toStringAsFixed(2)}",
             style: customTextStyle(
               fontSize: 12
             ),

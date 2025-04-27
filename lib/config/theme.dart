@@ -18,16 +18,15 @@ AppBarTheme appBarTheme = const AppBarTheme(
   toolbarHeight: 72,
 );
 
-InputDecoration customInputDecoration ({String text = ""})
-=> InputDecoration(
+InputDecoration customInputDecoration ()
+=> const InputDecoration(
   fillColor: Colors.white,
   filled: true,
-  hintText: text,
-  enabledBorder: const OutlineInputBorder(
+  enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: primaryGreen),
     borderRadius: BorderRadius.all(Radius.circular(12))
   ),
-  focusedBorder: const OutlineInputBorder(
+  focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: primaryGreen),
     borderRadius: BorderRadius.all(Radius.circular(12))
   ),
