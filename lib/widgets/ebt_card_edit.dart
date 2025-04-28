@@ -59,7 +59,8 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
     widget.ebt.dosePerFraction = dose;
 
     calculatingAgent.calculateEBT(widget.ebt, ref);
-    debugPrint("EQ2VALUE: " + widget.ebt.eqd2Value.toString());
+    calculatingAgent.calculateAllEBTs(ref);
+    calculatingAgent.calculateTotalValues(ref);
   }
 
   @override

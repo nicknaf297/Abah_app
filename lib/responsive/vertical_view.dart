@@ -1,4 +1,5 @@
 import 'package:abah_app/config/theme.dart';
+import 'package:abah_app/helper/calculating_agent.dart';
 import 'package:abah_app/main.dart';
 import 'package:abah_app/model/ebt.dart';
 import 'package:abah_app/provider.dart';
@@ -9,8 +10,40 @@ import 'package:abah_app/widgets/total_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VerticalView extends ConsumerWidget {
+class VerticalView extends ConsumerStatefulWidget {
   const VerticalView({super.key});
+
+  @override
+  ConsumerState<VerticalView> createState() => _VerticalViewState();
+}
+
+class _VerticalViewState extends ConsumerState<VerticalView> {
+  final calculatingAgent = CalculatingAgent();
+
+  late TextEditingController ratioController;
+
+  @override
+  void initState() {
+    super.initState();
+    ratioController = TextEditingController(
+      text: ref.read(aOverBRatioProvider.notifier).state.toString()
+    );
+    ratioController.addListener(updateValue);
+  }
+
+  @override
+  void dispose() {
+    ratioController.dispose();
+    super.dispose();
+  }
+
+  void updateValue() {
+    final ratio = double.tryParse(ratioController.text) ?? 0;
+    ref.read(aOverBRatioProvider.notifier).state = ratio;
+
+    calculatingAgent.calculateAllEBTs(ref);
+    calculatingAgent.calculateTotalValues(ref);
+  }
 
   Future<void> addEBT() async {
     EBT newEBT = EBT();
@@ -21,20 +54,19 @@ class VerticalView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    TextEditingController ratioController = TextEditingController(text: ref.watch(aOverBRatioProvider.notifier).state.toString());
     final ebtListAsync = ref.watch(ebtListProvider);
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SingleChildScrollView(    //Cannot place Column inside SingleChildScrollView - ScrollView try to take infinite space
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             children: [
               totalContainer(
-                BEDValue: 1777.89, 
-                EQD2Value: 1179.99, 
+                BEDValue: ref.watch(totalBEDProvider.notifier).state, 
+                EQD2Value: ref.watch(totalEQD2Provider.notifier).state, 
                 width: width
               ),
               const SizedBox(height: 12),
@@ -63,15 +95,20 @@ class VerticalView extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               ebtListAsync.when(
-                data: (ebts) => Column(
-                  children: ebts.map((ebt) => Padding(
+                data: (ebts) => ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: ebts.length,
+                  itemBuilder: (context, index) {
+                    final ebt = ebts[index];
+                    return Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
-                    child: EbtCard(
-                      ebt: ebt, 
-                      width: width
-                      ),
-                    )
-                  ).toList()
+                      child: EbtCard(
+                        ebt: ebt, 
+                        width: width
+                      )
+                    );
+                  }
                 ), 
                 error: (stack, e) => Center(child: Text("Error $e")), 
                 loading: () => const Center(child: CircularProgressIndicator())

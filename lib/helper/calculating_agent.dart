@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CalculatingAgent {
+  //new EBT Value
   void calculateEBT(EBT editEBt, WidgetRef ref) {
     final ebt = objectBox.getEBT(editEBt.id);
 
@@ -19,6 +20,7 @@ class CalculatingAgent {
     }
   }
 
+  //If change ABRatio, new EBT Value
   void calculateAllEBTs(WidgetRef ref) {
     final ebtIds = objectBox.getEBTIds();
 
@@ -32,6 +34,7 @@ class CalculatingAgent {
 
   }  
 
+  //If change ABRatio, new EBT Value
   void calculateTotalValues(WidgetRef ref) {
     final ebtIds = objectBox.getEBTIds();
     double totalBED = 0;
