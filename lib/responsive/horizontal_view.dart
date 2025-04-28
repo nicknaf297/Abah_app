@@ -1,4 +1,5 @@
 import 'package:abah_app/config/theme.dart';
+import 'package:abah_app/helper/calculating_agent.dart';
 import 'package:abah_app/main.dart';
 import 'package:abah_app/model/ebt.dart';
 import 'package:abah_app/provider.dart';
@@ -9,8 +10,40 @@ import 'package:abah_app/widgets/total_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HorizontalView extends ConsumerWidget {
+class HorizontalView extends ConsumerStatefulWidget {
   const HorizontalView({super.key});
+  
+  @override
+  ConsumerState<HorizontalView> createState() => _HorizontalViewState();
+}
+
+class _HorizontalViewState extends ConsumerState<HorizontalView>{
+  final calculatingAgent = CalculatingAgent();
+
+  late TextEditingController ratioController;
+
+  @override
+  void initState() {
+    super.initState();
+    ratioController = TextEditingController(
+      text: ref.read(aOverBRatioProvider.notifier).state.toString()
+    );
+    ratioController.addListener(updateValue);
+  }
+
+  @override
+  void dispose() {
+    ratioController.dispose();
+    super.dispose();
+  }
+
+  void updateValue() {
+    final ratio = double.tryParse(ratioController.text) ?? 0;
+    ref.read(aOverBRatioProvider.notifier).state = ratio;
+
+    calculatingAgent.calculateAllEBTs(ref);
+    calculatingAgent.calculateTotalValues(ref);
+  }
 
   Future<void> addEBT() async {
     EBT newEBT = EBT();
@@ -21,9 +54,8 @@ class HorizontalView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    TextEditingController ratioController = TextEditingController();
     final ebtListAsync = ref.watch(ebtListProvider);
 
     return Scaffold(
@@ -35,8 +67,8 @@ class HorizontalView extends ConsumerWidget {
               child: Column(
                 children: [
                   totalContainer(
-                    BEDValue: 12.0, 
-                    EQD2Value: 12.0, 
+                    BEDValue: ref.watch(totalBEDProvider.notifier).state, 
+                    EQD2Value: ref.watch(totalEQD2Provider.notifier).state, 
                     width: width
                   ),
                   const SizedBox(height: 12),
@@ -71,22 +103,24 @@ class HorizontalView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: ebtListAsync.when(
-                        data: (ebts) => Column(
-                          children: ebts.map((ebt) => Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                    child: ebtListAsync.when(
+                      data: (ebts) => ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: ebts.length,
+                        itemBuilder: (context, index) {
+                          final ebt = ebts[index];
+                          return Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                             child: EbtCard(
                               ebt: ebt, 
                               width: width
-                              ),
                             )
-                          ).toList()
-                        ), 
-                        error: (stack, e) => Center(child: Text("Error $e")), 
-                        loading: () => const Center(child: CircularProgressIndicator())
-                      ),
-                    )
+                          );
+                        }
+                      ), 
+                      error: (stack, e) => Center(child: Text("Error $e")), 
+                      loading: () => const Center(child: CircularProgressIndicator())
+                    ),
                   ),
                 ],
               ),

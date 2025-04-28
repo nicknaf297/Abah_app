@@ -97,6 +97,8 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
                 color: red,
                 onPressed: () {
                   deleteEBT(ebt.id);
+                  calculatingAgent.calculateAllEBTs(ref);
+                  calculatingAgent.calculateTotalValues(ref);
                 }
               ),
               const SizedBox(width: 12),
