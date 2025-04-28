@@ -1,13 +1,16 @@
 import 'package:abah_app/main.dart';
+import 'package:abah_app/model/ebt.dart';
 import 'package:abah_app/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CalculatingAgent {
-  void calculateEBT(int id, WidgetRef ref) {
-    final ebt = objectBox.getEBT(id);
+  void calculateEBT(EBT editEBt, WidgetRef ref) {
+    final ebt = objectBox.getEBT(editEBt.id);
 
     if (ebt != null) {
+      ebt.dosePerFraction = editEBt.dosePerFraction;
+      ebt.fraction = editEBt.fraction;
       ebt.calculateValues(ref.watch(aOverBRatioProvider));
       objectBox.insertEBT(ebt);
     }
