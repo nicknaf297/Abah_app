@@ -1,11 +1,13 @@
 import 'package:abah_app/config/theme.dart';
+import 'package:abah_app/provider.dart';
 import 'package:abah_app/responsive/horizontal_view.dart';
 import 'package:abah_app/responsive/responsive_layout.dart';
 import 'package:abah_app/responsive/vertical_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HdrPage extends StatefulWidget {
-  const HdrPage({super.key});
+  HdrPage({super.key});
 
   @override
   State<HdrPage> createState() => _HdrPageState();

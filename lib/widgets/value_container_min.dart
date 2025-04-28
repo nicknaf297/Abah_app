@@ -24,7 +24,7 @@ Widget valueContainerMinimized({
         ),
         Expanded(
           child: Text(
-            value.toString(),
+            value.toStringAsFixed(4),
             style: customTextStyle(
                 bold: true,
                 color: Colors.white,

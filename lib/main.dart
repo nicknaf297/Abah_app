@@ -1,11 +1,19 @@
 import 'package:abah_app/config/theme.dart';
+import 'package:abah_app/helper/objectbox.dart';
+import 'package:abah_app/provider.dart';
 import 'package:abah_app/screens/hdr_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+late ObjectBox objectBox;
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  objectBox = await ObjectBox.init();
   runApp(
     ProviderScope(
+      overrides: [
+        objectBoxProvider.overrideWithValue(objectBox),   //override the placeholder
+      ],
       child: MyApp()
     )
     
@@ -22,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: customTheme,
-      home: const HdrPage()
+      home: HdrPage()
     );
   }
 }

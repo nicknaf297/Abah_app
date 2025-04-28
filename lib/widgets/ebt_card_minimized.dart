@@ -38,21 +38,20 @@ Widget ebtCardMinimized ({
                 icon: const Icon(Icons.edit), 
                 color: primaryGreen,
                 onPressed: () {
-                  ref.read(ebtCardEditProvider.notifier).state = true;
-                  debugPrint("$ref.watch(ebtCardEditProvider)");
+                  ref.read(ebtCardEditProvider.notifier).set(ebt.id, true);
                 }
               )
             ],
           ),
           const SizedBox(height: 4),
           Text(
-            "Number of fraction:  $ebt.fraction",
+            "Number of fraction:  ${ebt.fraction.toStringAsFixed(2)}",
             style: customTextStyle(
               fontSize: 12
             ),
           ),
           Text(
-            "Dose per Fraction:  $ebt.dosePerFraction",
+            "Dose per Fraction:  ${ebt.dosePerFraction.toStringAsFixed(2)}",
             style: customTextStyle(
               fontSize: 12
             ),

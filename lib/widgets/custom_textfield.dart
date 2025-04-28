@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 Widget customTextField({
   required String label,
-  required String value,
   required TextEditingController textController, 
 }) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +18,7 @@ Widget customTextField({
           SizedBox(
             height: 50,
             child: TextFormField(
-              decoration: customInputDecoration(text: value),
+              decoration: customInputDecoration(),
               controller: textController,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
