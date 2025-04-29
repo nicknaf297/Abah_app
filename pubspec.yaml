@@ -22,6 +22,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.3"
 
   flutter_lints: ^4.0.0
   build_runner: ^2.4.15
@@ -36,3 +37,10 @@ flutter:
         - asset: fonts/SourceSans3-Regular.ttf
         - asset: fonts/SourceSans3-Bold.ttf
           weight: 700
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "Appicon"
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true

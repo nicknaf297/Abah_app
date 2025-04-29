@@ -11,7 +11,7 @@ Widget ebtCardMinimized ({
 }) => Consumer(
   builder: (context, ref, child) {
     return Container(
-      height: 193,
+      height: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -45,13 +45,19 @@ Widget ebtCardMinimized ({
           ),
           const SizedBox(height: 4),
           Text(
-            "Number of fraction:  ${ebt.fraction.toStringAsFixed(2)}",
+            "Number of fraction:  ${ebt.fraction}",
             style: customTextStyle(
               fontSize: 12
             ),
           ),
           Text(
             "Dose per Fraction:  ${ebt.dosePerFraction.toStringAsFixed(2)}",
+            style: customTextStyle(
+              fontSize: 12
+            ),
+          ),
+          Text(
+            "Total dose:  ${ebt.dose.toStringAsFixed(2)}",
             style: customTextStyle(
               fontSize: 12
             ),

@@ -42,6 +42,6 @@ final ebtCardEditProvider = StateNotifierProvider<EBTCardEditProvider, Map<int, 
         (ref) => EBTCardEditProvider()
 );
 
-final aOverBRatioProvider = StateProvider<double>((ref) => 12.0);
+final aOverBRatioProvider = StateProvider<double>((ref) => 0.0);
 final totalBEDProvider = StateProvider<double>((ref) => 0.0);
 final totalEQD2Provider = StateProvider<double>((ref) => 0.0);
