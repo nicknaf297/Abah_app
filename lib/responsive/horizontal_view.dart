@@ -64,28 +64,30 @@ class _HorizontalViewState extends ConsumerState<HorizontalView>{
         child: Row(
           children: [
             Expanded(
-              flex: 1,
-              child: SingleChildScrollView(   //Expanded cannot be in Scroll
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    totalContainer(
-                      BEDValue: ref.watch(totalBEDProvider.notifier).state, 
-                      EQD2Value: ref.watch(totalEQD2Provider.notifier).state, 
-                      width: width
+              child: CustomScrollView(   //Expanded cannot be in Scroll
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: [
+                        totalContainer(
+                          BEDValue: ref.watch(totalBEDProvider.notifier).state, 
+                          EQD2Value: ref.watch(totalEQD2Provider.notifier).state, 
+                          width: width
+                        ),
+                        const SizedBox(height: 12),
+                        customTextField(
+                          label: "a/B ratio", 
+                          textController: ratioController, 
+                        )
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    customTextField(
-                      label: "a/B ratio", 
-                      textController: ratioController, 
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
             const SizedBox(width: 24),
             Expanded(
-              flex: 1,
               child: Column(
                 children: [
                   Row(
