@@ -33,7 +33,7 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
   void initState() {
     super.initState();
 
-    fractionController = TextEditingController(text: widget.ebt.fraction.toStringAsFixed(2));
+    fractionController = TextEditingController(text: widget.ebt.fraction.toString());
     doseController = TextEditingController(text: widget.ebt.dosePerFraction.toStringAsFixed(2));
 
     fractionController.addListener(updateValue);
@@ -53,10 +53,10 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
 
   void updateValue() {
     final fraction = double.tryParse(fractionController.text) ?? 0;
-    final dose = double.tryParse(doseController.text) ?? 0;
+    final dosePerFraction = double.tryParse(doseController.text) ?? 0;
 
     widget.ebt.fraction = fraction;
-    widget.ebt.dosePerFraction = dose;
+    widget.ebt.dosePerFraction = dosePerFraction;
 
     calculatingAgent.calculateEBT(widget.ebt, ref);
     calculatingAgent.calculateAllEBTs(ref);
@@ -69,7 +69,7 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
     final width = widget.width;
 
     return Container(
-      height: 337,
+      height: 352,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -119,6 +119,13 @@ class _EbtCardEditState extends ConsumerState<EbtCardEdit> {
           customTextField(
             label: "Dose per Fraction", 
             textController: doseController, 
+          ),
+          const SizedBox(height: 12),
+          Text(
+            "Total Dose:  ${ebt.dose.toStringAsFixed(2)}",
+            style: customTextStyle(
+              fontSize: 12
+            ),
           ),
           const SizedBox(height: 12),
           Row(

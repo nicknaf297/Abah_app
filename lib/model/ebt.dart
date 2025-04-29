@@ -10,6 +10,7 @@ class EBT {
   double dosePerFraction;
   double bedValue;
   double eqd2Value;
+  double dose;
 
   EBT({
     this.id = 0,
@@ -17,10 +18,12 @@ class EBT {
     this.fraction = 0.0,
     this.dosePerFraction = 0.0,
     this.bedValue = 0.0,
-    this.eqd2Value = 0.0
+    this.eqd2Value = 0.0,
+    this.dose = 0.0,
   });
 
   void calculateValues(double aOverBRatio) {
+    dose = dosePerFraction * fraction;
     bedValue = fraction * dosePerFraction * (1 + dosePerFraction / aOverBRatio);
     eqd2Value = bedValue / (1 + 2 / aOverBRatio);
   }

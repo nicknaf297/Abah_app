@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 1543572403214441030),
       name: 'EBT',
-      lastPropertyId: const obx_int.IdUid(6, 3544159127052456062),
+      lastPropertyId: const obx_int.IdUid(7, 9027251985131921587),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -53,6 +53,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(6, 3544159127052456062),
             name: 'eqd2Value',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 9027251985131921587),
+            name: 'dose',
             type: 8,
             flags: 0)
       ],
@@ -118,13 +123,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (EBT object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addFloat64(2, object.fraction);
           fbb.addFloat64(3, object.dosePerFraction);
           fbb.addFloat64(4, object.bedValue);
           fbb.addFloat64(5, object.eqd2Value);
+          fbb.addFloat64(6, object.dose);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -143,13 +149,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final eqd2ValueParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final doseParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
           final object = EBT(
               id: idParam,
               name: nameParam,
               fraction: fractionParam,
               dosePerFraction: dosePerFractionParam,
               bedValue: bedValueParam,
-              eqd2Value: eqd2ValueParam);
+              eqd2Value: eqd2ValueParam,
+              dose: doseParam);
 
           return object;
         })
@@ -181,4 +190,7 @@ class EBT_ {
   /// See [EBT.eqd2Value].
   static final eqd2Value =
       obx.QueryDoubleProperty<EBT>(_entities[0].properties[5]);
+
+  /// See [EBT.dose].
+  static final dose = obx.QueryDoubleProperty<EBT>(_entities[0].properties[6]);
 }
